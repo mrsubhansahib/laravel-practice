@@ -5,6 +5,7 @@
              <li><a href="{{ route('users.index') }}">Users</a></li>
              <li><a href="{{ route('products.index') }}">Products</a></li>
              <li><a href="{{ route('user_products.index') }}">User Products</a></li>
+             <li><a href="{{ route('videos') }}">Videos</a></li>
              <li>
                  <form action="{{ route('logout') }}" method="POST">
                      @csrf

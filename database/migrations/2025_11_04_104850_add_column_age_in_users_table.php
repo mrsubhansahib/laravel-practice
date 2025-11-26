@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->date('age')->nullable()->after('email');
+            $table->string('age')->nullable()->after('email');
             $table->softDeletes()->nullable()->after('updated_at');
         });
     }

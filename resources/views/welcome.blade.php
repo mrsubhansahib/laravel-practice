@@ -2,7 +2,7 @@
 
 @section('content')
 
-
+@include('layout.alert')
 
 <h1>Welcome to my Application</h1>
 

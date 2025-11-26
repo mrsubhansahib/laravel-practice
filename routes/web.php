@@ -16,13 +16,16 @@ Route::middleware('guest')->group(function () {
     Route::post('register', [AuthController::class, 'register']);
 });
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware('auth')->group(function () {
 
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
     Route::resources(['users' => UserController::class,]);
     Route::get('/', function () {
         return view('welcome');
     })->name('welcome');
+    Route::get('/videos', function () {
+        return 'All videos are here';
+    })->name('videos')->middleware('age.check');
     Route::resources(['products' => ProductController::class,]);
     Route::resources(['user_products' => UserProductController::class,]);
 });

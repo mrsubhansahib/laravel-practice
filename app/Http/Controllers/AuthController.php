@@ -31,6 +31,7 @@ class AuthController extends Controller
             return 'Your password is incorrect';
         }
         
+        
     }
     public function showRegistrationForm()
     {
