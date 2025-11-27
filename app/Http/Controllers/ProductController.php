@@ -5,16 +5,20 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class ProductController extends Controller
 {
+    use AuthorizesRequests;
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $products = Product::get();
-        
+
         return view('products.index', ['products' => $products]);
     }
 
@@ -38,9 +42,9 @@ class ProductController extends Controller
             'price' => 'required|numeric',
             'description' => 'required|string',
         ]);
-
+        $validated['admin_id'] = auth()->id();
         Product::create($validated);
-          
+
 
         return redirect()->route('products.index')->with('success', 'Product created successfully!');
     }
@@ -66,13 +70,14 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
+        $this->authorize('update', $product); 
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'price' => 'required|numeric',
             'description' => 'required|string',
         ]);
 
-       $product->update($validated);
+        $product->update($validated);
 
         return redirect()->route('products.index')->with('success', 'Product updated successfully!');
     }
@@ -82,7 +87,12 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        $product->delete();
-        return redirect()->route('products.index')->with('success', 'Product deleted successfully!');
+        if (Gate::denies('is-super-admin')) {
+            // return abort(403);
+            return redirect()->route('products.index')->with('error', 'You do not have permission to delete this product.');
+        } else {
+            $product->delete();
+            return redirect()->route('products.index')->with('success', 'Product deleted successfully!');
+        }
     }
 }

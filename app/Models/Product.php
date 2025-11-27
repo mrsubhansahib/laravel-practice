@@ -13,6 +13,7 @@ class Product extends Model
         'name',
         'description',
         'price',
+        'admin_id',
     ];
     public function user_products()
     {

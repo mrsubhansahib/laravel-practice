@@ -18,20 +18,21 @@ class AuthController extends Controller
     {
         // dd($request->all());
         $validatedData = $request->validate([
-            'email' => 'required|string|email|exists:users,email',
+            'email' => 'required|string|email|exists:admins,email',
             'password' => 'required|string',
         ], [
             'email.exists' => 'The provided credentials do not match our records.',
         ]);
-        
-        if (Auth::attempt($validatedData)) {
+
+        if (Auth::guard('admin')->attempt($validatedData)) {
             $request->session()->regenerate();
+            // dd('logged in');
             return redirect()->intended('/');
         } else {
             return 'Your password is incorrect';
+            dd('logged failed');
         }
-        
-        
+        dd('some eroor');
     }
     public function showRegistrationForm()
     {

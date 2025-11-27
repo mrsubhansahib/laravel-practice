@@ -21,11 +21,13 @@
                     <td>{{ $product->description }}</td>
                     <td>
                         <a href="{{ route('products.edit', $product->id) }}">Edit</a>
-                        <form action="{{ route('products.destroy', $product->id) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit">Delete</button>
-                        </form>
+                        {{-- @can('is-super-admin') --}}
+                            <form action="{{ route('products.destroy', $product->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit">Delete</button>
+                            </form>
+                        {{-- @endcan --}}
                     </td>
                 </tr>
             @endforeach
