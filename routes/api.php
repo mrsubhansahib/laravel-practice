@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Admin;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -8,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/hello', function () {
     return 'Hello from API route';
 });
-Route::get('/all/admins', function () {
-    $admins=Admin::all();
-    return $admins; 
+Route::get('/menu', function () {
+    $menu=Product::all();
+    return $menu; 
 });
