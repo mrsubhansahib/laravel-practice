@@ -14,5 +14,9 @@ class Admin extends Authenticatable
         'password',
         'role',
     ];
-
+    
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
 }

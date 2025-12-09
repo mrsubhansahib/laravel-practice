@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\PostController;
 use App\Models\Admin;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -13,3 +14,5 @@ Route::get('/menu', function () {
     $menu=Product::all();
     return $menu; 
 });
+
+Route::apiResource('posts', PostController::class);
